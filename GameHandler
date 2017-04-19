@@ -1,0 +1,128 @@
+package src;
+
+import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
+
+import Control.CardController;
+import GUI.CardWindow;
+import GUI.Selector;
+
+/*
+ * This class will handle anything related to the game. This includes getting the user's
+ * card placement and the game's AI. It also creates the baord and generates the decks
+ * the players will use.
+ */
+  public final class GameHandler {
+
+	// Decks to be used by the player and computer.
+	  private static Deck _d = new Deck();
+  	private static ArrayList<Card> PC;
+  	private static ArrayList<Card> NPC;
+
+	  public static Selector _sel;
+
+	  CardWindow w;
+
+	// Getters for the player and computer IDs
+	  public static String PCID() {
+	  	if (PC.isEmpty()) {
+	  		return "";
+	  	} else {
+	  		return PC.get(0).getPlayerID();
+	  	}
+	  }
+
+	  public static String NPCID() {
+	  	if (NPC.isEmpty()) {
+	  		return "";
+	  	} else {
+	  		return NPC.get(0).getPlayerID();
+	  	}
+	  }
+
+	/*
+	 * ACTIVITY 1 Constructor for the GameHandler Class. Creates the board and
+	 * generates decks for PC and NPC. Also starts the game.
+	 */
+
+  	public GameHandler(boolean X) {
+	  	if (X) {
+	  		PC = _d.generateDeck("X");
+	  		NPC = _d.generateDeck("O");
+	  		NPC = _d.generateDeck("O");
+	  		w = new CardWindow();
+		  }
+	  }
+
+	  public void WhoIsFirst() {
+		  GameMode b = new GameMode();
+		  if (GameMode.Singleplayer) {
+		  	double bl = Math.random();
+		  	System.out.println(bl);
+		  	if (bl >= .5) {
+		  		b.PlayerFirst = true;
+		  	} else
+			  	b.PlayerFirst = false;
+
+			  if (b.PlayerFirst == true) {
+
+			  	w.getOpponentPlay(getOpponentCard());
+			  }
+		  } else if (GameMode.Multiplayer) {
+
+			  double blt = Math.random();
+
+			  if (blt >= .5)
+			  	b.PlayerFirst = true;
+
+		  	else if (blt < .5)
+			  	b.PlayerFirst = false;
+
+			  if (b.PlayerFirst == true) {
+			  	JOptionPane.showMessageDialog(null, "Red goes First");
+			  	CardController.playerOne = false;
+		  	} else if (b.PlayerFirst == false) {
+			  	JOptionPane.showMessageDialog(null, "Green goes First");
+			  	CardController.playerOne = true;
+			  }
+		  }
+  	}
+
+	/*
+	 * ACTIVITY 4 The getPlayerCard method removes a card from the player's deck
+	 * to be used by the player.
+	 */
+	  public static Card getPlayerCard() {
+		  _sel.getButtons();
+		  return PC.remove((int) (Math.random() * PC.size()));
+	  }
+
+	/*
+	 * ACTIVITY 5 The getOpponentCard method removes a card from the opponent's
+	 * deck to be used by the opponent.
+	 */
+
+	  public static Card getOpponentCard() {
+		  _sel.getButtons();
+		  return NPC.remove((int) (Math.random() * NPC.size()));
+	  }
+
+	  public static Card getHardOpponentCard() {
+		  for (int i = 0; i < NPC.size(); i++) {
+
+		  }
+		  return NPC.remove((int) (Math.random() * NPC.size()));
+	  }
+
+	/*
+	 * This method will re-generate the cards in the player's and the computer's
+	 * decks.
+	 */
+	  public static void regenerateDecks() {
+		  PC = _d.generateDeck("X");
+		  NPC = _d.generateDeck("O");
+
+	}
+
+}
