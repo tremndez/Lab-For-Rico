@@ -1,0 +1,77 @@
+package src;
+
+import javax.swing.JOptionPane;
+
+import GUI.CardWindow;
+
+  public class GameMode {
+  	public static boolean Dificulty;
+  	boolean Running = true;
+  	public boolean PlayerFirst = true;
+  	public boolean PlayerS = true;
+  	public static boolean Multiplayer;
+  	public static boolean Singleplayer;
+
+	  public void PickSize() {
+	  	while (Running) {
+	  		String x = JOptionPane.showInputDialog("do you want it 3x3(a),4x4(b),5x5(c)");
+
+	  		if (x.equals("a")) {
+		  		Running = false;
+		  		CardWindow.BOARD_SIZE = 3;
+
+		  		CardWindow.BOARD_WIDTH = CardWindow.PANEL_WIDTH * CardWindow.BOARD_SIZE + CardWindow.BOARD_X_OFFSET;
+		  		CardWindow.BOARD_HEIGHT = CardWindow.PANEL_HEIGHT * CardWindow.BOARD_SIZE + CardWindow.BOARD_Y_OFFSET;
+
+		  	} else if (x.equals("b")) {
+		  		Running = false;
+		  		CardWindow.BOARD_SIZE = 4;
+			  	CardWindow.BOARD_WIDTH = CardWindow.PANEL_WIDTH * CardWindow.BOARD_SIZE + CardWindow.BOARD_X_OFFSET;
+			  	CardWindow.BOARD_HEIGHT = CardWindow.PANEL_HEIGHT * CardWindow.BOARD_SIZE + CardWindow.BOARD_Y_OFFSET;
+
+		  	} else if (x.equals("c")) {
+			  	Running = false;
+			  	CardWindow.BOARD_SIZE = 5;
+			  	CardWindow.BOARD_WIDTH = CardWindow.PANEL_WIDTH * CardWindow.BOARD_SIZE + CardWindow.BOARD_X_OFFSET;
+			  	CardWindow.BOARD_HEIGHT = CardWindow.PANEL_HEIGHT * CardWindow.BOARD_SIZE + CardWindow.BOARD_Y_OFFSET;
+
+			  }
+
+		  }
+	  	Running = true;
+		  while (Running) {
+		  	String x = JOptionPane.showInputDialog("Hard(a) or Easy(b) ");
+		  	if (x.equals("a")) {
+		  		Dificulty = true;
+		  		Running = false;
+		  	}
+			  if (x.equals("b")) {
+			  	Dificulty = false;
+			  	Running = false;
+		  	}
+
+		  }
+		  Running = true;
+	  	while (Running) {
+		  	String x = JOptionPane.showInputDialog("Single player(a) or Multiplayer(b)");
+		  	GameHandler g = new GameHandler(false);
+		  	if (x.equals("a")) {
+		  		Singleplayer = false;
+		  		Running = false;
+
+		  	}
+		  	if (x.equals("b")) {
+		  		Multiplayer = true;
+		  		Running = false;
+		  	}
+	  		g.WhoIsFirst();
+	  	}
+		  GameHandler g = new GameHandler(true);
+
+	  }
+
+  	public void restart() {
+	  	GameHandler g = new GameHandler(false);
+	  	g.WhoIsFirst();
+	  }
+}
